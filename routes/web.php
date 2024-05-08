@@ -6,6 +6,10 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Middleware\AdminCheck;
 
+Route::get('/', function () {
+    return view('home');
+})->name('home');
+
 Route::get('/register', function () {
     return view('register');
 })->name('register');

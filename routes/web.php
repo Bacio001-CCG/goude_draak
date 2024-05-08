@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Middleware\AdminCheck;
 
 Route::get('/register', function () {
     return view('register');
@@ -18,8 +21,14 @@ Route::post('/logout', [AuthenticationController::class, 'logout'])->name('logou
 Route::middleware('auth')->group(
     function () {
 
-        Route::get('/checkout', function () {
-            return view('checkout.index');
-        })->name('checkout.index');
+        Route::prefix('checkout')->group(function () {
+
+            Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
+        });
+
+        Route::prefix('admin')->middleware(AdminCheck::class)->group(function () {
+
+            Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+        });
     }
 );

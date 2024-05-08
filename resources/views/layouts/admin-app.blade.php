@@ -20,11 +20,11 @@
 <body class="font-sans antialiased bg-gray-100">
 
     <div id="app" class="flex">
-        @include('layouts.navigations.checkout-nav')
+        @include('layouts.navigations.admin-nav')
         <div class="w-full">
             <div
                 class="w-full bg-white text-black/50 border-b p-5 tracking-widest font-bold uppercase text-lg relative">
-                <h1>Kassa \ <span class="text-base">@yield('header')</span></h1>
+                <h1>Admin \ <span class="text-base">@yield('header')</span></h1>
                 <form action="{{route('logout')}}" method="POST">
                     @csrf
                     <button class="fa-solid fa-right-from-bracket absolute right-5 top-1/2 -translate-y-1/2"

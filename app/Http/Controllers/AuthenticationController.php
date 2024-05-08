@@ -13,11 +13,9 @@ class AuthenticationController extends Controller
 
     public function register(RegistrationRequest $request)
     {
-
         User::create([
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'type' => $request->type
         ]);
 
         return redirect()->route('login');
@@ -25,10 +23,6 @@ class AuthenticationController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
 
         if (auth()->attempt($request->only('email', 'password'))) {
             return redirect()->route('checkout.index');

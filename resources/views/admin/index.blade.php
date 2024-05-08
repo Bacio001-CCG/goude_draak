@@ -1,7 +1,7 @@
-@extends('layouts.checkout-app')
+@extends('layouts.admin-app')
 @section('header')
 Home
 @endsection
 @section('content')
-checkout
+admin
 @endsection

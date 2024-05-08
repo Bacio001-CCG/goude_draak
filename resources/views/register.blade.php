@@ -25,18 +25,6 @@
             @method('POST')
 
             <div>
-                <label for="type" class="block text-sm font-medium leading-6 text-gray-900">{{__('Type Of
-                    Account')}}</label>
-                <div class="mt-2">
-                    <select id="type" name="type" type="text" required
-                        class="@error('type') border-red-500 @endif block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        <option value="employee" selected>{{__('Employee')}}</option>
-                        <option value="admin">{{__('Admin')}}</option>
-                    </select>
-                </div>
-            </div>
-
-            <div>
                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">{{__('Email
                     address')}}</label>
                 <div class="mt-2">

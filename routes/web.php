@@ -6,6 +6,22 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Middleware\AdminCheck;
 
+Route::get('/', function () {
+    return view('public.home');
+})->name('home');
+
+Route::get('/contact', function () {
+    return view('public.contact');
+})->name('contact');
+
+Route::get('/menu', function () {
+    return view('public.menu');
+})->name('menu');
+
+Route::get('/news', function () {
+    return view('public.news');
+})->name('news');
+
 Route::get('/register', function () {
     return view('register');
 })->name('register');

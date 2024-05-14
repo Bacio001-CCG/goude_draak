@@ -1,9 +1,9 @@
 import './bootstrap';
 import { createApp } from 'vue'
-import counter from '../views/components/counter.vue'
+import menuList from '../views/components/admin/menuList.vue'
 
 const app = createApp()
 
-app.component('counter', counter)
+app.component('menuList', menuList)
 
 app.mount('#app')

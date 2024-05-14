@@ -21,7 +21,7 @@
 
     <div id="app" class="flex">
         @include('layouts.navigations.admin-nav')
-        <div class="w-full">
+        <div class="w-full ml-[20rem]">
             <div
                 class="w-full bg-white text-black/50 border-b p-5 tracking-widest font-bold uppercase text-lg relative">
                 <h1>Admin \ <span class="text-base">@yield('header')</span></h1>

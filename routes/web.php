@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Middleware\AdminCheck;
+use App\Http\Controllers\AdminMenuController;
 
 Route::get('/', function () {
     return view('public.home');
@@ -42,9 +43,10 @@ Route::middleware('auth')->group(
             Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
         });
 
-        Route::prefix('admin')->middleware(AdminCheck::class)->group(function () {
+        Route::prefix('admin')->name('admin.')->middleware(AdminCheck::class)->group(function () {
 
-            Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+            Route::get('/', [AdminController::class, 'index'])->name('index');
+            Route::resource('menu', AdminMenuController::class)->except(['show']);
         });
     }
 );

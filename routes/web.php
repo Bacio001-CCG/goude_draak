@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Middleware\AdminCheck;
 use App\Http\Controllers\AdminMenuController;
+use App\Http\Controllers\PublicMenuController;
 
 Route::get('/', function () {
     return view('public.home');
@@ -22,6 +23,10 @@ Route::get('/menu', function () {
 Route::get('/news', function () {
     return view('public.news');
 })->name('news');
+
+Route::prefix('menu')->group(function () {
+    Route::get('/', [PublicMenuController::class, 'show'])->name('menu.show');
+});
 
 Route::get('/register', function () {
     return view('register');

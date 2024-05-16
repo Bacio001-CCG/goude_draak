@@ -11,5 +11,9 @@
             <li class="p-2 rounded-lg cursor-pointer hover:bg-white/20"><i class="fa-solid fa-list mr-2"></i>
                 Menu</li>
         </a>
+        <a href="{{route('admin.schedule.index')}}">
+            <li class="p-2 rounded-lg cursor-pointer hover:bg-white/20"><i class="fa-solid fa-calendar mr-2"></i>
+                Agenda</li>
+        </a>
     </ul>
 </nav>

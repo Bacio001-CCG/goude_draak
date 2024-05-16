@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Middleware\AdminCheck;
 use App\Http\Controllers\AdminMenuController;
+use App\Http\Controllers\AdminScheduleController;
 
 Route::get('/register', function () {
     return view('register');
@@ -31,6 +32,7 @@ Route::middleware('auth')->group(
 
             Route::get('/', [AdminController::class, 'index'])->name('index');
             Route::resource('menu', AdminMenuController::class)->except(['show']);
+            Route::resource('schedule', AdminScheduleController::class)->except(['show', 'edit', 'update', 'destroy']);
         });
     }
 );

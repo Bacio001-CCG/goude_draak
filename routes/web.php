@@ -39,10 +39,9 @@ Route::post('/logout', [AuthenticationController::class, 'logout'])->name('logou
 Route::middleware('auth')->group(
     function () {
 
-        Route::prefix('checkout')->group(function () {
-
-            Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
-        });
+        Route::resource('checkout', CheckoutController::class);
+        Route::post('checkout-add/{checkout}', [CheckoutController::class, 'add']);
+        Route::post('checkout-remove/{checkout}', [CheckoutController::class, 'remove']);
 
         Route::prefix('admin')->name('admin.')->middleware(AdminCheck::class)->group(function () {
 

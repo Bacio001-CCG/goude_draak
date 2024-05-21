@@ -7,6 +7,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Middleware\AdminCheck;
 use App\Http\Controllers\AdminMenuController;
 use App\Http\Controllers\PublicMenuController;
+use App\Http\Controllers\AdminScheduleController;
 
 Route::get('/', function () {
     return view('public.home');
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(
 
             Route::get('/', [AdminController::class, 'index'])->name('index');
             Route::resource('menu', AdminMenuController::class)->except(['show']);
+            Route::resource('schedule', AdminScheduleController::class)->except(['show', 'edit', 'update', 'destroy']);
         });
     }
 );

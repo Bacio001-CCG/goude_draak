@@ -10,7 +10,7 @@
             <nav class="flex justify-center m-8">
                 <ul class="flex space-x-0.5 border-[1px] border-black p-0.5">
                     <li>
-                        <a href="/menu" class="px-8 text-white bg-gradient-to-b from-[#00F9FF] to-blue-700">{{ __('public.Menu') }}</a>
+                        <a href="{{ route('menu.show') }}" class="px-8 text-white bg-gradient-to-b from-[#00F9FF] to-blue-700">{{ __('public.Menu') }}</a>
                     </li>
                     <li>
                         <a href="/news" class="px-8 text-white bg-gradient-to-b from-[#00F9FF] to-blue-700">{{ __('public.News') }}</a>

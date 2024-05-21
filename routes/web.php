@@ -26,6 +26,7 @@ Route::get('/news', function () {
 
 Route::prefix('menu')->group(function () {
     Route::get('/', [PublicMenuController::class, 'show'])->name('menu.show');
+    Route::get('/menu-download', [PublicMenuController::class, 'downloadMenuPdf'])->name('menu.download');
 });
 
 Route::get('/register', function () {
@@ -55,3 +56,18 @@ Route::middleware('auth')->group(
         });
     }
 );
+
+Route::post('locale', function () {
+    // Validate
+    $validated = request()->validate([
+        'language' => ['required'],
+    ]);
+    // Set locale
+    App::setLocale($validated['language']);
+    // Session
+    session()->put('locale', $validated['language']);
+    // Response
+    return redirect()->back();
+});
+
+

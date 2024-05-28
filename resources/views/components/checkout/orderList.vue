@@ -24,7 +24,7 @@ const formatDate = (dateString) => {
             class="w-full bg-white shadow-lg p-4 rounded-xl"
         >
             <h1 class="text-xl border-b pb-2 font-bold">
-                Bestelling # {{ order.id }}
+                Bestelling # {{ order.id }} - {{ order.type }}
             </h1>
             <h2 class="mt-2 text-right">
                 {{ formatDate(order.created_at) }}

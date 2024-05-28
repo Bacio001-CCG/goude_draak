@@ -42,6 +42,7 @@ Route::middleware('auth')->group(
         Route::resource('checkout', CheckoutController::class);
         Route::post('checkout-add/{checkout}', [CheckoutController::class, 'add']);
         Route::post('checkout-remove/{checkout}', [CheckoutController::class, 'remove']);
+        Route::post('note-add', [CheckoutController::class, 'noteAdd']);
 
         Route::prefix('admin')->name('admin.')->middleware(AdminCheck::class)->group(function () {
 

@@ -1,4 +1,4 @@
-<nav class="w-[20rem] h-screen bg-[#1f2937] text-white">
+<nav class="w-[20rem] h-screen bg-[#1f2937] text-white fixed z-50">
     <h1 class="w-full  border-b border-white/20 p-5 tracking-widest font-bold uppercase text-lg text-center text-white">
         De Gouden Draak
     </h1>

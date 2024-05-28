@@ -3,14 +3,14 @@ import { defineProps, reactive, computed } from "vue";
 import axios from "axios";
 
 const props = defineProps({
-    products: Array,
+    orderproducts: Array,
     checkoutid: String,
 });
 
-let reactiveProducts = reactive(props.products);
+let orderItems = reactive(props.orderproducts);
 
 window.addEventListener("product-added", (event) => {
-    reactiveProducts.push(event.detail);
+    orderItems.splice(0, orderItems.length, ...event.detail);
 });
 
 const removeProduct = async (product, index) => {
@@ -19,33 +19,36 @@ const removeProduct = async (product, index) => {
             `/checkout-remove/${props.checkoutid}`,
             [product.id, props.checkoutid]
         );
-        reactiveProducts.splice(index, 1);
+        orderItems.splice(0, orderItems.length, ...response.data);
     } catch (error) {
         console.error(error);
     }
 };
 
 const totalPrice = computed(() => {
-    return reactiveProducts.reduce(
-        (total, product) => total + parseInt(product.price),
+    return orderItems.reduce(
+        (total, item) => total + parseInt(item.product.price),
         0
     );
 });
 </script>
 
 <template>
-    <div class="flex flex-col w-full gap-5">
-        <h1>Producten in bestelling</h1>
+    <div class="flex flex-col w-full gap-5 overflow-y-auto">
+        <h1 class="mb-[4rem]">Producten in bestelling</h1>
 
-        <button
-            v-for="(product, index) in reactiveProducts"
-            class="w-full bg-white shadow-lg p-4 rounded-xl"
-            v-on:click="removeProduct(product, index)"
-        >
-            <h1 class="text-xl pb-2 font-bold" v-if="product">
-                {{ product.display_number }}. {{ product.name }}
-            </h1>
-        </button>
+        <div v-for="(item, index) in orderItems">
+            <button
+                v-key="index"
+                class="w-full bg-white px-3 py-1 rounded-xl mb-2"
+                v-on:click="removeProduct(item.product, index)"
+            >
+                <h1 class="text-xl pb-2 font-bold" v-if="item.product">
+                    {{ item.product.display_number }}. {{ item.product.name }}
+                </h1>
+            </button>
+            <order-item-note :product="item.product" :orderitem="item" />
+        </div>
     </div>
 
     <div class="mt-10 border-t">

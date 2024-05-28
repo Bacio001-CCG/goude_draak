@@ -12,4 +12,14 @@ class OrderProduct extends Model
     public $guarded = [];
 
     public $table = 'orders_products';
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

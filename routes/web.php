@@ -8,6 +8,9 @@ use App\Http\Middleware\AdminCheck;
 use App\Http\Controllers\AdminMenuController;
 use App\Http\Controllers\PublicMenuController;
 use App\Http\Controllers\AdminScheduleController;
+use App\Http\Controllers\TableController;
+
+Route::resource('table', TableController::class);
 
 Route::get('/', function () {
     return view('public.home');

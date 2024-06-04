@@ -6,7 +6,13 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Middleware\AdminCheck;
 use App\Http\Controllers\AdminMenuController;
+use App\Http\Controllers\PublicMenuController;
 use App\Http\Controllers\AdminScheduleController;
+use App\Http\Controllers\TableController;
+
+Route::post('table/{id}', [TableController::class, 'store'])->name('table.store');
+Route::resource('table', TableController::class)->except(['store']);
+
 
 Route::get('/', function () {
     return view('public.home');
@@ -23,6 +29,11 @@ Route::get('/menu', function () {
 Route::get('/news', function () {
     return view('public.news');
 })->name('news');
+
+Route::prefix('menu')->group(function () {
+    Route::get('/', [PublicMenuController::class, 'show'])->name('menu.show');
+    Route::get('/menu-download', [PublicMenuController::class, 'downloadMenuPdf'])->name('menu.download');
+});
 
 Route::get('/register', function () {
     return view('register');
@@ -52,3 +63,18 @@ Route::middleware('auth')->group(
         });
     }
 );
+
+Route::post('locale', function () {
+    // Validate
+    $validated = request()->validate([
+        'language' => ['required'],
+    ]);
+    // Set locale
+    App::setLocale($validated['language']);
+    // Session
+    session()->put('locale', $validated['language']);
+    // Response
+    return redirect()->back();
+});
+
+

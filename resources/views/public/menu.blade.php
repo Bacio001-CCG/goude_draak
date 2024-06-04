@@ -2,8 +2,9 @@
 
 @section('content')
     <div class="bg-[#fffaf0] border-[1px] border-black text-center">
-        <p>
-            (Hier moeten we een menu kaart genereren)
-        </p>
+        <public-menu :categories="{{$categories}}"/>
+    </div>
+    <div class="text-center text-[#ffff00]">
+        <a href="{{ route('menu.download') }}">Download menu</a>
     </div>
 @endsection

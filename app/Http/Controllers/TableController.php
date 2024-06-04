@@ -21,7 +21,12 @@ class TableController
 
     public function store(Request $request)
     {
-        dd($request);
+        foreach($request->order as $productId => $quantity) {
+            if($quantity > 0)
+            {
+                
+            }
+        }
         return response()->json(['message' => 'Order submitted successfully'], 200);
     }
 }

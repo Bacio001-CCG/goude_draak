@@ -10,7 +10,9 @@ use App\Http\Controllers\PublicMenuController;
 use App\Http\Controllers\AdminScheduleController;
 use App\Http\Controllers\TableController;
 
-Route::resource('table', TableController::class);
+Route::post('table/{id}', [TableController::class, 'store'])->name('table.store');
+Route::resource('table', TableController::class)->except(['store']);
+
 
 Route::get('/', function () {
     return view('public.home');

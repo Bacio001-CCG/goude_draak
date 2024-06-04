@@ -11,7 +11,7 @@
             <span>Volgende bestelling: </span>
         </div>
         <div>
-            <order-form :categories="{{$categories}}"/>
+            <order-form :categories="{{$categories}}" :tableid="{{$table->id}}"/>
         </div>
     </div>
 @endsection

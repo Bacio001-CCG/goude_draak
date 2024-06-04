@@ -3,10 +3,10 @@ import { defineProps, ref, computed } from "vue";
 
 const props = defineProps({
     categories: Array,
+    tableid: Number,
 });
 
 const quantities = ref({});
-
 
 const csrf = computed(() => {
     return document
@@ -34,7 +34,7 @@ const decrementQuantity = (productId) => {
 
 <template>
     <div>
-        <form action="table" method="post">
+        <form :action="'/table/' + props.tableid" method="post">
             <input type="hidden" name="_token" :value="csrf" />
             <ul>
                 <li class="mb-4" v-for="category in categories" :key="category.id">
@@ -45,7 +45,7 @@ const decrementQuantity = (productId) => {
                             <span class="flex-grow border-b border-black border-dotted mb-3"></span>
                             <span>€ {{ product.price }}</span>
                             <label class="ml-8" :for="'amount-' + product.id">aantal:</label>
-                            <input class="w-10 text-center" :id="'amount-' + product.id" type="text" :value="quantities[product.id]" readonly>
+                            <input class="w-10 text-center" :name="'order[' + product.id + ']'" :id="'amount-' + product.id" type="text" :value="quantities[product.id]" readonly>
                             <button class="bg-green-400 p-1 w-5" type="button" @click="incrementQuantity(product.id)">+</button>
                             <button class="bg-red-400 p-1 w-5" type="button" @click="decrementQuantity(product.id)">-</button>
                         </li>

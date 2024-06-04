@@ -65,24 +65,21 @@ const filteredCategories = computed(() => {
                 <span>Naam</span>
                 <span>Prijs</span>
             </div>
-            <a
-                v-for="category in filteredCategories"
-                class="px-3"
-                :href="'menu/' + category.id + '/edit'"
-            >
+            <a v-for="category in filteredCategories" class="px-3">
                 <h1 class="font-bold text-center bg-gray-50">
                     {{ category.name }}
                 </h1>
                 <ul class="flex flex-col mt-5">
-                    <li
+                    <a
                         v-for="product in category.products"
                         class="gap-5 w-full grid grid-cols-4 text-center hover:bg-gray-100 cursor-pointer py-0.5"
+                        :href="'menu/' + product.id + '/edit'"
                     >
                         <span>#{{ product.id }}</span>
                         <span>{{ product.display_number }}</span>
                         <span>{{ product.name }}</span>
                         <span>{{ product.price }}</span>
-                    </li>
+                    </a>
                 </ul>
             </a>
         </ul>

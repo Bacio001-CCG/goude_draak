@@ -40,7 +40,7 @@ Menu \ Aanpassen
         </div>
 
         <button class=" bg-blue-500 text-white px-5 py-1 rounded-lg hover:bg-blue-500/50 w-[10rem]" type="submit">
-            <i class="fa-solid fa-plus mr-1"></i> Aanmaken
+            <i class="fa-solid fa-pencil mr-1"></i> Aanpassen
         </button>
 
     </div>

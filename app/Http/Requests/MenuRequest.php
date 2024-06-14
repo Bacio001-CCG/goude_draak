@@ -15,7 +15,7 @@ class MenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'display_number' => 'required',
+            'display_number' => 'required|unique:products,display_number',
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',

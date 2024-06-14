@@ -1,23 +1,25 @@
 <script setup>
-import { defineProps, ref, computed } from "vue";
+import { defineProps, ref, computed, watch, onMounted } from "vue";
 
 const props = defineProps({
     categories: Array,
     tableid: Number,
+    lastplacedorder: String,
+    round: Number,
 });
 
 const quantities = ref({});
-
-const csrf = computed(() => {
-    return document
-        .querySelector('meta[name="csrf-token"]')
-        .getAttribute("content");
-});
 
 props.categories.forEach(category => {
     category.products.forEach(product => {
         quantities.value[product.id] = 0;
     });
+});
+
+const csrf = computed(() => {
+    return document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
 });
 
 const incrementQuantity = (productId) => {
@@ -30,9 +32,43 @@ const decrementQuantity = (productId) => {
     }
 };
 
+const remainingTime = ref("10:00");
+let interval = null;
+
+const calculateRemainingTime = () => {
+    const updateTime = () => {
+        const lastOrderTime = new Date(props.lastplacedorder);
+        const now = new Date();
+        const elapsedMilliseconds = now - lastOrderTime;
+        const remainingMilliseconds = Math.max(10 * 60 * 1000 - elapsedMilliseconds, 0);
+
+        const minutes = Math.floor((remainingMilliseconds / (1000 * 60)) % 60);
+        const seconds = Math.floor((remainingMilliseconds / 1000) % 60);
+        remainingTime.value = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+        if (remainingMilliseconds <= 0) {
+            clearInterval(interval);
+            remainingTime.value = "00:00";
+        }
+    };
+
+    updateTime(); 
+
+    interval = setInterval(updateTime, 1000);
+};
+
+onMounted(() => {
+    calculateRemainingTime();
+});
 </script>
 
-<template>
+<template>    
+    <div class="flex justify-between">
+        <span>Ronde {{ props.round + 1 }}/5</span>        
+        <span v-if="remainingTime !== '00:00'">
+            Volgende bestelling: {{ remainingTime }}
+        </span>
+    </div>
     <div>
         <form :action="'/table/' + props.tableid" method="post">
             <input type="hidden" name="_token" :value="csrf" />
@@ -52,7 +88,13 @@ const decrementQuantity = (productId) => {
                     </ul>
                 </li>
             </ul>
-            <button type="submit">Plaatsen</button>
+            
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                    type="submit"
+                    v-if="remainingTime === '00:00'"
+                    :disabled="remainingTime !== '00:00'">
+                Plaatsen
+            </button>
         </form>
     </div>
 </template>

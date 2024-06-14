@@ -1,4 +1,5 @@
 import './bootstrap';
+import './customerInput';
 import { createApp } from 'vue'
 import menuList from '../views/components/admin/menuList.vue'
 import publicMenu from '../views/components/public/menu.vue'
@@ -21,4 +22,3 @@ app.component('orderItemNote', orderItemNote)
 app.component('orderForm', orderForm)
 
 app.mount('#app')
-

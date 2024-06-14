@@ -12,4 +12,9 @@ class Table extends Model
     public $guarded = [];
 
     public $table = 'tables';
+    
+    public function tableOrder()
+    {
+        return $this->belongsTo(TableOrder::class, 'active_table_order_id');
+    }
 }

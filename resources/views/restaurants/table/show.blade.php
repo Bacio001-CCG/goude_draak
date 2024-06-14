@@ -8,16 +8,22 @@
             {{session('success')}}
         </div>
         @endif
+        @if(session('error'))
+        <div class="bg-red-500 text-white p-3 rounded-lg mb-5">
+            {{session('error')}}
+        </div>
+        @endif
         <div>
             <h2 class="font-bold text-2xl">Tafel: {{$table->id}}</h2>
         </div>
-        @if($table->tableOrder->round < 5)
+        @if($table->tableOrder->round() < 5)
             <div>
                 <order-form 
-                    :categories="{{$categories}}" 
+                    :categories="{{$categories}}"                     
+                    :pastorders="{{$pastOrders}}" 
                     :tableid="{{$table->id}}" 
                     :lastplacedorder="'{{ \Carbon\Carbon::parse($table->tableOrder->last_placed_round)->format('Y-m-d\TH:i:s') }}'"
-                    :round="{{$table->tableOrder->round}}"
+                    :round="{{$table->tableOrder->round()}}"
                 />
             </div>
         @else

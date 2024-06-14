@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
+            $table->integer('round')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();
 

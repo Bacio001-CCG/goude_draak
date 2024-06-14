@@ -3,10 +3,13 @@ import { defineProps, ref, computed, watch, onMounted } from "vue";
 
 const props = defineProps({
     categories: Array,
+    pastorders: Object,
     tableid: Number,
     lastplacedorder: String,
     round: Number,
 });
+
+console.log(props.pastorders);
 
 const quantities = ref({});
 
@@ -60,18 +63,56 @@ const calculateRemainingTime = () => {
 onMounted(() => {
     calculateRemainingTime();
 });
+
+const repeatOrder = (order) => {
+    for (const key in quantities.value) {
+        quantities.value[key] = 0;
+    }
+
+    order.forEach(product => {
+        if (quantities.value[product.product_id] !== undefined) {
+            quantities.value[product.product_id] += 1;
+        }
+    });
+};
+
+const showPastOrders = ref(false);
+
+const togglePastOrders = () => {
+    showPastOrders.value = !showPastOrders.value;
+};
 </script>
 
-<template>    
-    <div class="flex justify-between">
-        <span>Ronde {{ props.round + 1 }}/5</span>        
-        <span v-if="remainingTime !== '00:00'">
-            Volgende bestelling: {{ remainingTime }}
-        </span>
-    </div>
-    <div>
-        <form :action="'/table/' + props.tableid" method="post">
-            <input type="hidden" name="_token" :value="csrf" />
+<template>   
+    <form :action="props.tableid" method="post" class="mb-5"> 
+        <div class="sticky top-0 bg-white z-10 py-2">
+            <div class="flex justify-between">
+                <span>Ronde {{ props.round + 1 }}/5</span>        
+                <span v-if="remainingTime !== '00:00'">
+                    Volgende bestelling: {{ remainingTime }}
+                </span>
+            </div>
+            <div class="relative bg-gray-100 rounded-lg px-2 pt-2 shadow-md mb-4">
+                <button @click="togglePastOrders" type="button" class="bg-gray-500 text-white font-semibold py-1 px-2 rounded mb-2">Vorige rondes</button>
+                <div v-if="showPastOrders">    
+                    <ul class="pb-2">
+                        <li v-for="(round, index) in pastorders" :key="index" class="flex justify-between justify-center gap-0.5 mb-2">
+                            <span>Ronde: {{ index }}</span>
+                            <span class="flex-grow border-b border-black border-dotted mb-3"></span>
+                            <button class="bg-blue-400 p-1 px-2 text-white" type="button" @click="repeatOrder(round)">Herhaal</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>               
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                    type="submit"
+                    v-if="remainingTime === '00:00'"
+                    :disabled="remainingTime !== '00:00'">
+                Plaatsen
+            </button>            
+        </div>
+        <div>
+            <input type="hidden" name="_token" :value="csrf" />    
             <ul>
                 <li class="mb-4" v-for="category in categories" :key="category.id">
                     <h3 class="font-bold text-lg">{{ category.name }}</h3>
@@ -87,14 +128,8 @@ onMounted(() => {
                         </li>
                     </ul>
                 </li>
-            </ul>
-            
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                    type="submit"
-                    v-if="remainingTime === '00:00'"
-                    :disabled="remainingTime !== '00:00'">
-                Plaatsen
-            </button>
-        </form>
-    </div>
+            </ul>        
+        </div>
+    </form>
 </template>
+

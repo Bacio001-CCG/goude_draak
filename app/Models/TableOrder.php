@@ -21,6 +21,13 @@ class TableOrder extends Model
         return $this->belongsTo(Order::class);
     }
     
+    public function round()
+    {
+        $maxRound = $this->order->orders_products->max('round');
+
+        return $maxRound ?? 0;
+    }
+    
     public function table()
     {
         return $this->belongsTo(Table::class);

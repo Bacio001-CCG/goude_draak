@@ -28,7 +28,7 @@ Tafels
                 <tr class="border-b hover:bg-gray-50">
                     <td class="px-4 py-2 text-gray-700">{{ $table->id }}</td>
                     @if($table->active_table_order_id)
-                        <td class="px-4 py-2">{{$table->tableOrder->round}}/ 5</td>
+                        <td class="px-4 py-2">{{$table->tableOrder->round()}}/ 5</td>
                         <td class="px-4 py-2"> {{$table->tableOrder->customers->count()}} </td>
                         <td class="px-4 py-2"> {{$table->tableOrder->deluxe_menu ? 'ja' : 'nee'}} </td>
                         <td class="px-4 py-2 flex gap-6  items-center">

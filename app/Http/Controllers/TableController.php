@@ -70,7 +70,7 @@ class TableController
 
     public function show(Table $table)
     {        
-        if(!$table->tableOrder) return response()->json(['message' => 'tafel staat niet open'], 200);
+        if(!$table->tableOrder) return redirect()->route('table.overview');
 
         $categories = Category::has('products')
             ->with(['products' => function ($query) {
@@ -78,7 +78,9 @@ class TableController
             }])
             ->get();
 
-        return view('restaurants.table.show', ['table' => $table, 'categories' => $categories]);
+        $pastOrders = $table->tableOrder->order->orders_products->whereNotNull('round')->groupBy('round');
+
+        return view('restaurants.table.show', ['table' => $table, 'categories' => $categories, 'pastOrders' => $pastOrders]);
     }
     
     public function store(Request $request, $tableid)
@@ -86,18 +88,23 @@ class TableController
         $table = Table::findOrFail($tableid);
         
         $tableOrder = $table->tableOrder;
+        $round = $tableOrder->round() + 1;
+        $productCreated = false;
 
         foreach($request->order as $productId => $quantity) {
             for ($i=0; $i < $quantity; $i++) {                  
                 OrderProduct::create([
                     'order_id' => $tableOrder->order->id,
                     'product_id' => $productId,
+                    'round' => $round,
                 ]);
+                $productCreated = true;
             }    
         }
 
+        if(!$productCreated) return redirect()->route('table.show', ['table' => $table])->with('error', 'Geen producten in de bestelling');
+
         $tableOrder->last_placed_round = Carbon::now()->addHours(2);
-        $tableOrder->round = $tableOrder->round += 1;
         $tableOrder->save();
 
         return redirect()->route('table.show', ['table' => $table])->with('success', 'Bestelling is geplaatst');

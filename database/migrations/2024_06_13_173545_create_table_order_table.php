@@ -16,7 +16,6 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('table_id');
-            $table->integer('round')->default(0);
             $table->dateTime('last_placed_round');
             $table->boolean('deluxe_menu')->default(false);
                         

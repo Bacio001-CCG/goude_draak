@@ -31,7 +31,7 @@
                         type="submit"></button>
                 </form>
             </div>
-            <div class="p-5">
+            <div class="p-5 ml-[20rem]">
                 @yield('content')
             </div>
         </div>

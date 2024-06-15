@@ -8,6 +8,11 @@ use App\Http\Middleware\AdminCheck;
 use App\Http\Controllers\AdminMenuController;
 use App\Http\Controllers\PublicMenuController;
 use App\Http\Controllers\AdminScheduleController;
+use App\Http\Controllers\TableController;
+
+Route::post('restaurant/table/{id}', [TableController::class, 'store'])->name('table.store');
+Route::get('restaurant/table/{table}', [TableController::class, 'show'])->name('table.show');
+Route::get('restaurant', [TableController::class, 'activeTableOverview'])->name('table.overview');
 
 Route::get('/', function () {
     return view('public.home');
@@ -44,11 +49,13 @@ Route::post('/logout', [AuthenticationController::class, 'logout'])->name('logou
 
 Route::middleware('auth')->group(
     function () {
-
-        Route::prefix('checkout')->group(function () {
-
-            Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
-        });
+        Route::resource('checkout', CheckoutController::class);
+        Route::post('checkout-add/{checkout}', [CheckoutController::class, 'add']);
+        Route::post('checkout-remove/{checkout}', [CheckoutController::class, 'remove']);
+        Route::post('note-add', [CheckoutController::class, 'noteAdd']);
+        
+        Route::resource('table', TableController::class)->except(['store', 'create', 'show', 'destroy']);
+        Route::get('table/{table}/close', [TableController::class, 'close'])->name('table.close');
 
         Route::prefix('admin')->name('admin.')->middleware(AdminCheck::class)->group(function () {
 

@@ -19,7 +19,7 @@
 
 <body class="font-sans antialiased bg-gray-100">
 
-    <div id="app">
+    <div id="app" class="bg-white max-w-4xl mx-auto p-4">
         @yield('content')
     </div>
 

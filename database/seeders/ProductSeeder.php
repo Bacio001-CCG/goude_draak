@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Category;
+use App\Models\Product;
 
 class ProductSeeder extends Seeder
 {
@@ -13,7 +14,8 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $soupCategory = Category::factory()->create(['name' => 'Soup']);
+        //Caregories
+        $soupCategory = Category::factory()->create(['name' => 'Soep']);
         $voorgerechtCategory = Category::factory()->create(['name' => 'Voorgerecht']);
         $bamiEnNasiGerechtenCategory = Category::factory()->create(['name' => 'Bami en Nasi Gerechten']);
         $combinatieGerechtenCategory = Category::factory()->create(['name' => 'Combinatie Gerechten (met witte rijst)']);
@@ -27,9 +29,14 @@ class ProductSeeder extends Seeder
         $garnalenGerechtenCategory = Category::factory()->create(['name' => 'Garnalen Gerechten (met witte rijst)']);
 
         $ossenhaasGerechtenCategory = Category::factory()->create(['name' => 'Ossenhaas Gerechten (met witte rijst)', 'is_pickup' => true]);
+        $ossenhaasGerechtenCategory = Category::factory()->create(['name' => 'Vissen Gerechten (met witte rijst)', 'is_pickup' => true]);
         $pekingEendGerechtenCategory = Category::factory()->create(['name' => 'Pekking Eend Gerechten (met witte rijst)', 'is_pickup' => true]);
         $tiepanSpecialiteitenCategory = Category::factory()->create(['name' => 'Tiepan Specialiteiten (met witte rijst)', 'is_pickup' => true]);
         $vegetarischeGerechtenCategory = Category::factory()->create(['name' => 'Vegetarische Gerechten (met witte rijst)', 'is_pickup' => true]);
-        $rijsttafelsCategory = Category::factory()->create(['name' => 'Rijsttafels', 'is_pickup' => true]);
+
+        $vegetarischeGerechtenCategory = Category::factory()->create(['name' => 'Kinder menu\'s']);
+        $rijsttafelsCategory = Category::factory()->create(['name' => 'Rijsttafels', 'is_pickup' => true]);  
+        $vegetarischeGerechtenCategory = Category::factory()->create(['name' => 'Buffet']);
+        $vegetarischeGerechtenCategory = Category::factory()->create(['name' => 'Diversen']);
     }
 }

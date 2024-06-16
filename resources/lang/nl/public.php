@@ -13,4 +13,7 @@ return [
     'Adres' => 'Onderwijsboulevard 215, kamer OG112',
     'Postalcode' => "5223 DE 's-Hertogenbosch",
     'CoronaMessage' => "Door de Corona crisis is De Gouden Draak op het moment slechts beperkt open. Het restaurant-gedeelte is gesloten. U kan uw favoriete gerechten nog wel afhalen.",
+    'Sort' => 'Sorteren',
+    'public' => 'Al jaren is De Gouden Draak een begrip als het gaat om de beste afhaalgerechten in \'s-Hertogenbosch.
+Graag trakteren we u op authentieke gerechten uit de Cantonese keuken.'
 ];

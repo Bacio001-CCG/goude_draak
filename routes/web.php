@@ -10,6 +10,7 @@ use App\Http\Controllers\PublicMenuController;
 use App\Http\Controllers\AdminScheduleController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\ReviewController;
+use Illuminate\Http\Request;
 
 Route::post('restaurant/table/{id}', [TableController::class, 'store'])->name('table.store');
 Route::get('restaurant/table/{table}', [TableController::class, 'show'])->name('table.show');
@@ -18,7 +19,9 @@ Route::get('restaurant', [TableController::class, 'activeTableOverview'])->name(
 Route::get('/review', [ReviewController::class, 'create'])->name('review.create');
 Route::post('/review', [ReviewController::class, 'store'])->name('review.post');
 
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
+    $preferredLanguage = $request->getPreferredLanguage(['en', 'nl']);
+    session()->put('language', $preferredLanguage);
     return view('public.home');
 })->name('home');
 
@@ -66,19 +69,17 @@ Route::middleware('auth')->group(
             Route::get('/', [AdminController::class, 'index'])->name('index');
             Route::resource('menu', AdminMenuController::class)->except(['show']);
             Route::resource('schedule', AdminScheduleController::class)->except(['show', 'edit', 'update', 'destroy']);
+            Route::get('/revenue', [AdminController::class, 'revenue'])->name('revenue.index');
         });
     }
 );
 
-Route::post('locale', function () {
-    // Validate
-    $validated = request()->validate([
-        'language' => ['required'],
-    ]);
-    // Set locale
-    App::setLocale($validated['language']);
-    // Session
-    session()->put('locale', $validated['language']);
-    // Response
+Route::post('/en', function () {
+    session()->put('language', 'en');
     return redirect()->back();
-});
+})->name('language.en');
+
+Route::post('/nl', function () {
+    session()->put('language', 'nl');
+    return redirect()->back();
+})->name('language.nl');

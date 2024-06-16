@@ -19,5 +19,6 @@
             <li class="p-2 rounded-lg cursor-pointer hover:bg-white/20"><i class="fa-solid fa-cutlery mr-2"></i>
                 tafels</li>
         </a>
+
     </ul>
 </nav>

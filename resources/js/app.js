@@ -9,6 +9,7 @@ import productList from '../views/components/checkout/productList.vue'
 import orderDisplayList from '../views/components/checkout/orderDisplayList.vue'
 import orderItemNote from '../views/components/checkout/orderItemNote.vue'
 import orderForm from '../views/components/restaurant/orderForm.vue'
+import publicReview from '../views/components/public/review.vue'
 
 const app = createApp()
 
@@ -20,5 +21,6 @@ app.component('productList', productList)
 app.component('orderDisplayList', orderDisplayList)
 app.component('orderItemNote', orderItemNote)
 app.component('orderForm', orderForm)
+app.component('publicReview', publicReview)
 
 app.mount('#app')

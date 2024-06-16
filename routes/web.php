@@ -9,10 +9,14 @@ use App\Http\Controllers\AdminMenuController;
 use App\Http\Controllers\PublicMenuController;
 use App\Http\Controllers\AdminScheduleController;
 use App\Http\Controllers\TableController;
+use App\Http\Controllers\ReviewController;
 
 Route::post('restaurant/table/{id}', [TableController::class, 'store'])->name('table.store');
 Route::get('restaurant/table/{table}', [TableController::class, 'show'])->name('table.show');
 Route::get('restaurant', [TableController::class, 'activeTableOverview'])->name('table.overview');
+
+Route::get('/review', [ReviewController::class, 'create'])->name('review.create');
+Route::post('/review', [ReviewController::class, 'store'])->name('review.post');
 
 Route::get('/', function () {
     return view('public.home');
@@ -53,7 +57,7 @@ Route::middleware('auth')->group(
         Route::post('checkout-add/{checkout}', [CheckoutController::class, 'add']);
         Route::post('checkout-remove/{checkout}', [CheckoutController::class, 'remove']);
         Route::post('note-add', [CheckoutController::class, 'noteAdd']);
-        
+
         Route::resource('table', TableController::class)->except(['store', 'create', 'show', 'destroy']);
         Route::get('table/{table}/close', [TableController::class, 'close'])->name('table.close');
 
@@ -78,5 +82,3 @@ Route::post('locale', function () {
     // Response
     return redirect()->back();
 });
-
-

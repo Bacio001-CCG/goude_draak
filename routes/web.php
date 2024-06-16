@@ -15,6 +15,8 @@ Route::post('restaurant/table/{id}', [TableController::class, 'store'])->name('t
 Route::get('restaurant/table/{table}', [TableController::class, 'show'])->name('table.show');
 Route::get('restaurant/table/{table}/payment', [TableController::class, 'paymentScreen'])->name('table.paymentScreen');
 Route::get('restaurant/table/{table}/pay', [TableController::class, 'pay'])->name('table.pay');
+Route::get('restaurant/table/{table}/help', [TableController::class, 'helpScreen'])->name('table.help');
+Route::post('restaurant/table/{table}/help', [TableController::class, 'help'])->name('table.store.help');
 Route::get('restaurant', [TableController::class, 'activeTableOverview'])->name('table.overview');
 
 Route::get('/review', [ReviewController::class, 'create'])->name('review.create');
@@ -62,6 +64,8 @@ Route::middleware('auth')->group(
 
         Route::resource('table', TableController::class)->except(['store', 'create', 'show', 'destroy']);
         Route::get('table/{table}/close', [TableController::class, 'close'])->name('table.close');
+        Route::get('table/{table}/helprequest', [TableController::class, 'helpRequest'])->name('table.help.request');
+        Route::get('table/{helpRequest}/completehelprequest', [TableController::class, 'completeHelpRequest'])->name('table.complete.request');
 
         Route::prefix('admin')->name('admin.')->middleware(AdminCheck::class)->group(function () {
 

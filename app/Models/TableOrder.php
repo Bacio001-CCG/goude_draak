@@ -15,6 +15,16 @@ class TableOrder extends Model
     {
         return $this->hasMany(Customer::class);
     }
+    
+    public function helpRequests()
+    {
+        return $this->hasMany(HelpRequest::class)->orderBy('completed');
+    }
+    
+    public function uncompletedHelpRequests()
+    {
+        return $this->helpRequests()->where('completed', false);
+    }
 
     public function order()
     {

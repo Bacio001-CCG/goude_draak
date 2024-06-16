@@ -14,10 +14,15 @@
         </div>
         @endif
         <div class="flex justify-between">
-            <h2 class="font-bold text-2xl">Tafel: {{$table->id}}</h2>             
-            <a href="{{ route('table.paymentScreen', $table) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
-                Betalen
-            </a>
+            <h2 class="font-bold text-2xl">Tafel: {{$table->id}}</h2>    
+            <div class="flex gap-4">   
+                <a href="{{ route('table.help', $table) }}" class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-1 px-2 rounded">
+                    Help!
+                </a> 
+                <a href="{{ route('table.paymentScreen', $table) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                    Betalen
+                </a>
+            </div>      
         </div>
         @if($table->tableOrder->round() < 5)
             <div>

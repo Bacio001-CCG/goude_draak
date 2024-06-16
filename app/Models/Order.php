@@ -20,4 +20,9 @@ class Order extends Model
     {
         return $this->hasMany(OrderProduct::class);
     }
+    
+    public function price()
+    {
+        return $this->products()->sum('price');
+    }
 }

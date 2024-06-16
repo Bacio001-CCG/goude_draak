@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 
 Route::post('restaurant/table/{id}', [TableController::class, 'store'])->name('table.store');
 Route::get('restaurant/table/{table}', [TableController::class, 'show'])->name('table.show');
+Route::get('restaurant/table/{table}/payment', [TableController::class, 'paymentScreen'])->name('table.paymentScreen');
+Route::get('restaurant/table/{table}/pay', [TableController::class, 'pay'])->name('table.pay');
 Route::get('restaurant', [TableController::class, 'activeTableOverview'])->name('table.overview');
 
 Route::get('/review', [ReviewController::class, 'create'])->name('review.create');

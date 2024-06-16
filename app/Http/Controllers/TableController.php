@@ -11,6 +11,7 @@ use App\Models\OrderProduct;
 use App\Models\Transaction;
 use App\Models\Customer;
 use Carbon\Carbon;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TableController
 {
@@ -105,15 +106,18 @@ class TableController
     
     public function pay(Table $table)
     {                
-        $transaction = Transaction::create([
-            'price' => $table->tableOrder->order->products->sum('price'),
-            'order_id' => $table->tableOrder->order->id,
-        ]);
+        // $transaction = Transaction::create([
+        //     'price' => $table->tableOrder->order->products->sum('price'),
+        //     'order_id' => $table->tableOrder->order->id,
+        // ]);
 
-        $table->active_table_order_id = null;
-        $table->save();
+        // $table->active_table_order_id = null;
+        // $table->save();
 
-        return redirect()->route('table.overview');
+        $url = config('app.url') . '/review';
+        $qrCode = QrCode::size(300)->generate($url);
+
+        return view('restaurants.table.thankyoupage', ['qrCode' => $qrCode, 'url' => $url]);
     }
     
     public function store(Request $request, $tableid)

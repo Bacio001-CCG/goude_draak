@@ -8,6 +8,7 @@ use App\Models\TableOrder;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\Transaction;
 use App\Models\Customer;
 use Carbon\Carbon;
 
@@ -81,6 +82,38 @@ class TableController
         $pastOrders = $table->tableOrder->order->orders_products->whereNotNull('round')->groupBy('round');
 
         return view('restaurants.table.show', ['table' => $table, 'categories' => $categories, 'pastOrders' => $pastOrders]);
+    }
+    
+    public function paymentScreen(Table $table)
+    {   
+        $orderdProducts = $table->tableOrder->order->products; 
+        $orderdProductsQuantities = [];
+        
+        foreach($orderdProducts as $product)
+        {
+            if (isset($orderdProductsQuantities[$product->id])) {
+                $orderdProductsQuantities[$product->id]->quantity++;
+            } else {
+                $product->quantity = 1;
+                $orderdProductsQuantities[$product->id] = $product;
+            }
+        }
+
+        return view('restaurants.table.payment', ['table' => $table, 'orderdProducts' => $orderdProductsQuantities]);
+    }
+
+    
+    public function pay(Table $table)
+    {                
+        $transaction = Transaction::create([
+            'price' => $table->tableOrder->order->products->sum('price'),
+            'order_id' => $table->tableOrder->order->id,
+        ]);
+
+        $table->active_table_order_id = null;
+        $table->save();
+
+        return redirect()->route('table.overview');
     }
     
     public function store(Request $request, $tableid)

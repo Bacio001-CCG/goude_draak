@@ -13,8 +13,11 @@
             {{session('error')}}
         </div>
         @endif
-        <div>
-            <h2 class="font-bold text-2xl">Tafel: {{$table->id}}</h2>
+        <div class="flex justify-between">
+            <h2 class="font-bold text-2xl">Tafel: {{$table->id}}</h2>             
+            <a href="{{ route('table.paymentScreen', $table) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                Betalen
+            </a>
         </div>
         @if($table->tableOrder->round() < 5)
             <div>
@@ -28,7 +31,7 @@
             </div>
         @else
             <div>
-                <p>Alle rondes zijn voltooid. Bedankt voor uw bezoek!</p>
+                <p class="mb-5">Alle rondes zijn voltooid. Bedankt voor uw bezoek!</p>   
             </div>
         @endif
     </div>

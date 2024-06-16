@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderProduct;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -41,6 +42,11 @@ class CheckoutController
         OrderProduct::create([
             'order_id' => $request[1],
             'product_id' => $request[0],
+        ]);
+
+        Transaction::create([
+            'order_id' => $request[1],
+            'price' => Product::find($request[0])->price,
         ]);
 
         return OrderProduct::where('order_id', $request[1])->with('order')->with('product')->get();

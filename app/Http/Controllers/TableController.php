@@ -10,7 +10,9 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Transaction;
 use App\Models\Customer;
+use App\Models\HelpRequest;
 use Carbon\Carbon;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TableController
 {
@@ -102,6 +104,37 @@ class TableController
         return view('restaurants.table.payment', ['table' => $table, 'orderdProducts' => $orderdProductsQuantities]);
     }
 
+    public function helpScreen(Table $table)
+    {   
+        return view('restaurants.table.help', ['table' => $table]);
+    }
+
+    public function help(Request $request, Table $table)
+    {
+        $request->validate([
+            'question' => 'nullable|string|max:255',
+        ]);
+          
+        HelpRequest::create([
+            'question' => $request->question,
+            'table_order_id' => $table->tableOrder->id,
+        ]);
+
+        return redirect()->route('table.show', ['table' => $table])->with('success', 'Hulp verzoek is verzonden.');
+    }
+    
+    public function completeHelpRequest(HelpRequest $helpRequest)
+    {          
+        $helpRequest->completed = true;
+        $helpRequest->save();
+
+        return redirect()->route('table.index')->with('success', 'Vraag is verholpen');
+    }
+    
+    public function helpRequest(Table $table)
+    {   
+        return view('checkout.table.help', ['table' => $table]);
+    }
     
     public function pay(Table $table)
     {                
@@ -113,7 +146,10 @@ class TableController
         $table->active_table_order_id = null;
         $table->save();
 
-        return redirect()->route('table.overview');
+        $url = config('app.url') . '/review';
+        $qrCode = QrCode::size(300)->generate($url);
+
+        return view('restaurants.table.thankyoupage', ['qrCode' => $qrCode, 'url' => $url]);
     }
     
     public function store(Request $request, $tableid)

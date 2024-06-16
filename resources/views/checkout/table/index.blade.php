@@ -37,7 +37,13 @@ Tafels
                             </a>
                             <a href="{{ route('table.close', $table) }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
                                 Sluiten
-                            </a>
+                            </a>      
+                            
+                            @if($table->tableOrder->uncompletedHelpRequests->count() > 0)                      
+                                <a href="{{ route('table.help.request', $table) }}" class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-1 px-2 rounded">
+                                    Hulpvragen: {{ $table->tableOrder->uncompletedHelpRequests->count() }}
+                                </a>                                
+                            @endif
                         </td>
                     @else                        
                         <td class="px-4 py-2" colspan="3"></td>

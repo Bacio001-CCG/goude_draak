@@ -17,9 +17,14 @@
 </head>
 
 <body class="font-sans antialiased bg-[#8b0000]">
-    <div id="app" class="bg-[#ff0000] mx-12 my-3.5">
+    <div id="app" class="bg-[#ff0000] mx-2 md:mx-12 my-3.5">
         @include('components.public.site-header')
-        @include('components.public.site-content')
+        {{-- <div class="md:block hidden"> --}}
+            @include('components.public.site-content')
+            {{-- </div>
+        <div class="md:hidden block">
+            @yield('main')
+        </div> --}}
     </div>
 </body>
 
